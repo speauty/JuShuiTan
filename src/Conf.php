@@ -20,20 +20,15 @@ class Conf
     private $debugBaseUri = 'http://c.jushuitan.com';
     private $path = '/api/open/query.aspx';
     private $confArr = [
-        'partnerId' => '',
-        'partnerKey' => '',
+        'partnerid' => '',
+        'partnerkey' => '',
         'token' => '',
         'method' => '',
         'ts' => 0,
         'sign' => ''
     ];
 
-    private $makeSignWithoutIdx = [
-        'partnerId' => '',
-        'partnerKey' => '',
-        'sign' => '',
-        'method' => ''
-    ];
+    private $makeSignWithoutIdx = ['partnerid', 'partnerkey', 'sign', 'method'];
 
     private $debugConf = [
         'partnerId' => 'ywv5jGT8ge6Pvlq3FZSPol345asd',
@@ -123,9 +118,9 @@ class Conf
         $str = '';
         foreach ($this->confArr as $k => $v) {
             if (!in_array($k, $this->makeSignWithoutIdx)) {
-                $str .= strtolower($k).$v;
+                $str .= $k.$v;
             }
         }
-        $this->confArr['sign'] = MD5($this->confArr['method'].$this->confArr['partnerId'].$str.$this->confArr['partnerKey']);
+        $this->confArr['sign'] = MD5($this->confArr['method'].$this->confArr['partnerid'].$str.$this->confArr['partnerkey']);
     }
 }

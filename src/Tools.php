@@ -26,30 +26,28 @@ class Tools
     public function __construct(Conf $conf)
     {
         if (!$this->conf instanceof Conf) $this->conf = $conf;
-        $this->conf->checkConf();
     }
 
     /**
      * 执行请求
      * @param array|null $params
-     * @param string $method
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return array|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function exec(?array $params = null, string $method = 'POST')
+    public function exec(?array $params = null):?array
     {
+        $confArr = $this->conf->get('confArr');
+        unset($confArr['partnerkey']);
+        $headers = $confArr;
+        $headers['Content-Type'] = 'application/x-www-form-urlencoded';
         $client = new HttpClient([
             'base_uri' => $this->conf->get('baseUri'),
-            'headers' => $this->conf->get('confArr')
+            'headers' => $headers
         ]);
         $path = $this->conf->get('path');
-        $requestArgs = [$method, $path, ['body'=>$params]];
-        if ($method === 'GET') {
-            $path .= '?'.http_build_query($params);
-            $requestArgs[1] = $path;
-            unset($requestArgs[2]);
-        }
+        $path .= '?'.http_build_query($confArr);
+        $requestArgs = ['POST', $path, ['body'=>json_encode($params)]];
         $response = $client->request(...$requestArgs);
-        return $response->getBody();
+        return json_decode($response->getBody()->getContents(), true);
     }
 }
