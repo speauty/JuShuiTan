@@ -25,7 +25,7 @@ class Tools
      */
     public function __construct(Conf $conf)
     {
-        if (!$conf instanceof Conf) $this->conf = $conf;
+        if (!$this->conf instanceof Conf) $this->conf = $conf;
         $this->conf->checkConf();
     }
 
