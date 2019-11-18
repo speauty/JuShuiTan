@@ -7,17 +7,26 @@
  */
 
 namespace JuShuiTan;
-
-
 use GuzzleHttp\Client as HttpClient;
 
+
+/**
+ * Class Tools
+ * @package JuShuiTan
+ */
 class Tools
 {
     private $conf = null;
 
+    /**
+     * Tools constructor.
+     * @param Conf $conf
+     * @throws \Exception
+     */
     public function __construct(Conf $conf)
     {
         if (!$conf instanceof Conf) $this->conf = $conf;
+        $this->conf->checkConf();
     }
 
     /**
@@ -34,10 +43,13 @@ class Tools
             'headers' => $this->conf->get('confArr')
         ]);
         $path = $this->conf->get('path');
+        $requestArgs = [$method, $path, ['body'=>$params]];
         if ($method === 'GET') {
             $path .= '?'.http_build_query($params);
-            $params = null;
+            $requestArgs[1] = $path;
+            unset($requestArgs[2]);
         }
-        return $client->request($method, $path, ['body' => $params]);
+        $response = $client->request(...$requestArgs);
+        return $response->getBody();
     }
 }
