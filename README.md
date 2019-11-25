@@ -21,3 +21,48 @@ var_dump($jushuitan->exec(["modified_begin"=>"2016-08-30 10:51:40","modified_end
 ```
 
 下一步, 可以考虑将`method`也封装一下, 只需要传个查询参数进来即可, 不过具体采用哪种模式, 还是要认真考虑一下.
+
+```
+测试账号:
+网址: http://c.jushuitan.com;
+企业版客户(有精细化库存管理)
+帐号: kfcs@jst.com
+密码: qwe123qwe;
+PartnerId: ywv5jGT8ge6Pvlq3FZSPol345asd;
+PartnerKey: ywv5jGT8ge6Pvlq3FZSPol2323;
+TOKEN: 181ee8952a88f5a57db52587472c3798;
+
+专业版客户(无精细化库存管理):
+帐号: kfcszy@jst.com
+密码: qwe123qwe;
+PartnerId: ywv5jGT8ge6Pvlq3FZSPol345asd;
+PartnerKey：ywv5jGT8ge6Pvlq3FZSPol2323;
+TOKEN: 3f723a3e4bd178cdc7070b48641c5707;
+```
+
+##### 样例代码
+```
+# 基础API
+use Exp\BasicApi;
+require_once './vendor/autoload.php';
+$basic = new BasicApi();
+var_dump($basic->shopQuery(['微合伙人1']));
+var_dump($basic->logisticsCompanyQuery());
+var_dump($basic->wmsPartnerQuery());
+var_dump($basic->authShopGenerateQuery());
+var_dump($basic->refreshToken());
+```
+
+```
+# 商品API
+use Exp\GoodsApi;
+
+require_once './vendor/autoload.php';
+
+$goods = new GoodsApi();
+var_dump($goods->itemUpload());
+var_dump($goods->mallItemUpload());
+var_dump($goods->skuQuery(['310089000Y']));
+var_dump($goods->skuMapQuery());
+var_dump($goods->categoryQuery());
+```
