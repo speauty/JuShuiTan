@@ -31,8 +31,8 @@ class Conf
     private $makeSignWithoutIdx = ['partnerid', 'partnerkey', 'sign', 'method'];
 
     private $debugConf = [
-        'partnerId' => 'ywv5jGT8ge6Pvlq3FZSPol345asd',
-        'partnerKey' => 'ywv5jGT8ge6Pvlq3FZSPol2323',
+        'partnerid' => 'ywv5jGT8ge6Pvlq3FZSPol345asd',
+        'partnerkey' => 'ywv5jGT8ge6Pvlq3FZSPol2323',
         'token' => '181ee8952a88f5a57db52587472c3798',
     ];
 
